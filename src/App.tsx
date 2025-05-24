@@ -26,6 +26,7 @@ function App(){
     if (lastPath && location.pathname === '/') {
       navigate(lastPath, { replace: true }) // prevent pushing duplicate entries
     }
+    console.log("The last pth was",lastPath);
   }, [])
 
   return (
