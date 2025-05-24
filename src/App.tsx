@@ -1,15 +1,32 @@
-import { useState } from 'react' 
+import { useState, useEffect } from 'react' 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Ecom from './pages/Ecom/Ecom'
 import Feature from './pages/Feature/Feature'
 import Resume from './pages/Resume/Resume'
-import {Link, Route, Routes } from 'react-router-dom'
+import {Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Home from'./pages/Home/Home'
 
 function App(){
   const [count, setCount] = useState(0)
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  // ✅ Save current path to localStorage
+  useEffect(() => {
+    localStorage.setItem('lastVisitedPath', location.pathname)
+  }, [location.pathname])
+
+  // ✅ Restore last visited path on first load
+  useEffect(() => {
+    const lastPath = localStorage.getItem('lastVisitedPath')
+
+    // only redirect if on root
+    if (lastPath && location.pathname === '/') {
+      navigate(lastPath, { replace: true }) // prevent pushing duplicate entries
+    }
+  }, [])
 
   return (
     <>
